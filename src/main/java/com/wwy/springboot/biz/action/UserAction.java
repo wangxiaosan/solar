@@ -1,19 +1,24 @@
 package com.wwy.springboot.biz.action;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  * @author wangxiaosan
  * @date 2017/09/29
  */
-@RestController
-@RequestMapping(value = "/user")
+@Controller
+@Path("/hello")
 public class UserAction {
 
-    @RequestMapping(method = RequestMethod.GET,value = "/add")
-    public String addUser() {
+    @GET
+    @Path("/springBoot")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String helloWord() {
         String s = "this is spring boot";
         System.out.println(s);
         return s;
