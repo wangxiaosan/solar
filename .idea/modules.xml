@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/solar.iml" filepath="$PROJECT_DIR$/solar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wwy-web/wwy-web.iml" filepath="$PROJECT_DIR$/wwy-web/wwy-web.iml" />
+    </modules>
+  </component>
+</project>

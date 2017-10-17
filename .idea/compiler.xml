@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="solar" target="1.5" />
+      <module name="springbootdemo" target="1.5" />
+      <module name="wangxiaosan-web" target="1.5" />
+      <module name="wwy-web" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
