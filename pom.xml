@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>wwy-web</module>
+        <module>wwy-eureka</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -30,14 +31,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <!-- Import dependency management from Spring Boot -->
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-dependencies</artifactId>
-            <version>1.4.3.RELEASE</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

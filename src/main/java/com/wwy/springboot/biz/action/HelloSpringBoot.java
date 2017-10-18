@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Controller
 @Path("/hello")
-public class UserAction {
+public class HelloSpringBoot {
 
     @GET
     @Path("/springBoot")
