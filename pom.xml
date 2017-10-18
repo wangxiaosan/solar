@@ -10,6 +10,7 @@
     <modules>
         <module>wwy-web</module>
         <module>wwy-eureka</module>
+        <module>wwy-common</module>
     </modules>
     <packaging>pom</packaging>
 
