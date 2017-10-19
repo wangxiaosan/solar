@@ -11,5 +11,12 @@
 
     <artifactId>wwy-web-server</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.wwy.solar</groupId>
+            <artifactId>wwy-web-cluster</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

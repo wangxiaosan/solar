@@ -1,5 +1,6 @@
 package com.wwy.web.server;
 
+import com.wwy.eureka.api.cluster.Node;
 import org.springframework.context.ApplicationContext;
 
 /**

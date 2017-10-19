@@ -38,7 +38,7 @@ public enum ResponseCode {
     private final int code;
     private final String reason;
 
-    private ResponseCode(int code, String reason) {
+    ResponseCode(int code, String reason) {
         this.code = code;
         this.reason = reason;
     }
