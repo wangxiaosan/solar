@@ -5,6 +5,9 @@ import com.alibaba.fastjson.JSON;
 /**
  * @author wangxiaosan
  * @date 2017/10/19
+ *
+ * 服务节点配置
+ *
  */
 public class NodeConfig {
     private String name;

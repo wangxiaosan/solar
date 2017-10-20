@@ -11,5 +11,13 @@
 
     <artifactId>wwy-eureka-api</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.wwy.solar</groupId>
+            <artifactId>wwy-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

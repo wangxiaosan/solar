@@ -5,6 +5,9 @@ import org.springframework.util.StringUtils;
 /**
  * @author wangxiaosan
  * @date 2017/10/19
+ *
+ * 服务节点类型
+ *
  */
 public enum NodeType {
     // job tracker
