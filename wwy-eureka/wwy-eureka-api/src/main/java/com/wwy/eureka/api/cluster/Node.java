@@ -31,7 +31,7 @@ public class Node {
     // 事件中心
     private EventCenter eventCenter;
     // 注册中心状态监控
-    private RegistryStatMonitor registryStatMonitor;
+//    private RegistryStatMonitor registryStatMonitor;
 
     public EventCenter getEventCenter() {
         return eventCenter;
@@ -57,13 +57,13 @@ public class Node {
         this.masterElector = masterElector;
     }
 
-    public RegistryStatMonitor getRegistryStatMonitor() {
-        return registryStatMonitor;
-    }
+//    public RegistryStatMonitor getRegistryStatMonitor() {
+//        return registryStatMonitor;
+//    }
 
-    public void setRegistryStatMonitor(RegistryStatMonitor registryStatMonitor) {
-        this.registryStatMonitor = registryStatMonitor;
-    }
+//    public void setRegistryStatMonitor(RegistryStatMonitor registryStatMonitor) {
+//        this.registryStatMonitor = registryStatMonitor;
+//    }
 
 
     public NodeConfig getConfig() {
@@ -148,7 +148,7 @@ public class Node {
 
     public String toFullString() {
         if (fullString == null) {
-            fullString = NodeRegistryUtils.getFullPath(this);
+//            fullString = NodeRegistryUtils.getFullPath(this);
         }
         return fullString;
     }

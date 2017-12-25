@@ -1,5 +1,6 @@
 package com.wwy.eureka.api;
 
+import com.wwy.common.lang.spi.SPI;
 import com.wwy.eureka.api.cluster.Node;
 
 /**
@@ -8,6 +9,7 @@ import com.wwy.eureka.api.cluster.Node;
  *
  * 节点注册接口
  */
+@SPI("zookeeper")
 public interface Registry {
     /**
      * 节点注册

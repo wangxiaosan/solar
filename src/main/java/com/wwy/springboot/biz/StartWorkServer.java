@@ -1,4 +1,4 @@
-package com.wwy.springboot.web.server;
+package com.wwy.springboot.biz;
 
 import com.wwy.springboot.web.jersey.JerseyConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @date 2017/09/29
  */
 @SpringBootApplication
-@ComponentScan("com.wwy.springboot.biz")
+@ComponentScan(basePackages = {"com.wwy.springboot.biz"})
 public class StartWorkServer {
 
     @Bean
