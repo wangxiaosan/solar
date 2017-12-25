@@ -14,6 +14,10 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * @author wangxiaosan
  * @date 2017/09/29
+ *
+ * 启动项本来在web下面的server里，网上说的只要配置@ComponentScan就可以扫描到配置的包，测试情况：
+ *      controller和service都能扫描到，但是repository的接口一直无法注入，被迫妥协约定，
+ *      把启动项移到了代码的所在包的上层。
  */
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.wwy.springboot.biz"})
