@@ -1,0 +1,7 @@
+database:
+  driverClassName: com.mysql.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/wwy?zeroDateTimeBehavior=convertToNull
+  username: root
+  password: "123456"
+  maxIdle: 5
+  maxActive: 100
