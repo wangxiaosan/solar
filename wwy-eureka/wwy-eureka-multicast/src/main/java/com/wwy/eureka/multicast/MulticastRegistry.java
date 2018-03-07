@@ -133,7 +133,6 @@ public class MulticastRegistry extends FailbackRegistry {
         }
     }
 
-
     private void receive(String msg, InetSocketAddress remoteAddress) {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(MarkerFactory.getMarker(LogMarker.PLATFORM), "Receive multicast message: " + msg + " from " + remoteAddress);
