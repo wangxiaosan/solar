@@ -13,6 +13,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>wwy-eureka-api</module>
+        <module>wwy-eureka-multicast</module>
+        <module>wwy-eureka-redis</module>
+        <module>wwy-eureka-zookeeper</module>
     </modules>
 
 

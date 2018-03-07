@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -48,22 +49,5 @@ public class HelloSpringBoot {
         return userService.findAllUser();
     }
 
-    public static void main(String[] args) {
-        List<Map<String, String>> ls = Lists.newArrayList();
-        Map<String, List<Map<String, String>>> idnumMap = Maps.newHashMap();
-        if(null != ls && !ls.isEmpty()) {
-            for(Map<String, String > lsMap : ls) {
-                for (String lsMapKey : lsMap.keySet()) {
-                    if(null == idnumMap.get(lsMapKey) || idnumMap.get(lsMapKey).isEmpty()) {
-                        idnumMap.put(lsMapKey, Lists.newArrayList(lsMap));
-                    } else {
-                        List<Map<String, String>> maps = idnumMap.get(lsMapKey);
-                        maps.add(lsMap);
-                        idnumMap.put(lsMapKey, maps);
-                    }
-                }
 
-            }
-        }
-    }
 }

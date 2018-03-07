@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ *  * 在一个jvm中的pub sub 简易实现
  * @author wangxiaosan
  * @date 2017/10/20
  */
