@@ -7,8 +7,10 @@ import java.util.regex.Pattern;
  * @date 2017/10/20
  */
 public interface Constants {
-    // 可用的处理器个数
-    int AVAILABLE_PROCESSOR = Runtime.getRuntime().availableProcessors();
+	/**
+	 *  可用的处理器个数
+	 */
+	int AVAILABLE_PROCESSOR = Runtime.getRuntime().availableProcessors();
 
     int DEFAULT_PROCESSOR_THREAD = 5;
 
@@ -18,8 +20,10 @@ public interface Constants {
 
     String LINE_SEPARATOR = System.getProperty("line.separator");
 
-    // 默认集群名字
-    String DEFAULT_CLUSTER_NAME = "defaultCluster";
+	/**
+	 *  默认集群名字
+	 */
+	String DEFAULT_CLUSTER_NAME = "defaultCluster";
 
     String CHARSET = "UTF-8";
 

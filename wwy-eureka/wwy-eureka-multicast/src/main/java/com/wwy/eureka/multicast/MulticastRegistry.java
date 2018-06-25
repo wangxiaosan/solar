@@ -4,7 +4,7 @@ import com.wwy.common.lang.NamedThreadFactory;
 import com.wwy.common.lang.constants.Constants;
 import com.wwy.common.lang.constants.LogMarker;
 import com.wwy.common.lang.utils.ConcurrentHashSet;
-import com.wwy.eureka.api.FailbackRegistry;
+import com.wwy.eureka.api.AbstractFailbackRegistry;
 import com.wwy.eureka.api.NodeRegistryUtils;
 import com.wwy.eureka.api.NotifyEvent;
 import com.wwy.eureka.api.NotifyListener;
@@ -24,7 +24,7 @@ import java.util.concurrent.*;
  * @author wangxiaosan
  * @date 2018/03/07
  */
-public class MulticastRegistry extends FailbackRegistry {
+public class MulticastRegistry extends AbstractFailbackRegistry {
     private static final String DEFAULT_MULTICAST_ADDRESS = "230.30.1.1";
     private static final int DEFAULT_MULTICAST_PORT = 1234;
     public static final int DEFAULT_SESSION_TIMEOUT = 60 * 1000;

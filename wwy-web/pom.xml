@@ -8,11 +8,12 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <name>web</name>
     <artifactId>wwy-web</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>wwy-web-cluster</module>
+        <module>wwy-web-server</module>
     </modules>
 
 

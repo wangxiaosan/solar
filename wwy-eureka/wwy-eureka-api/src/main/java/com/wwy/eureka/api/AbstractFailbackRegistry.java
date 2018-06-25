@@ -16,7 +16,7 @@ import java.util.concurrent.*;
  * @author wangxiaosan
  * @date 2018/03/07
  */
-public abstract class FailbackRegistry extends AbstractRegistry {
+public abstract class AbstractFailbackRegistry extends AbstractRegistry {
     // 定时任务执行器
     private final ScheduledExecutorService retryExecutor = Executors.newScheduledThreadPool(1,
             new NamedThreadFactory("LTSRegistryFailedRetryTimer", true));
@@ -31,7 +31,7 @@ public abstract class FailbackRegistry extends AbstractRegistry {
     private final ConcurrentMap<Node, Set<NotifyListener>> failedUnsubscribed = new ConcurrentHashMap<>();
     private final ConcurrentMap<Node, Map<NotifyListener, NotifyPair<NotifyEvent, List<Node>>>> failedNotified = new ConcurrentHashMap<>();
 
-    public FailbackRegistry(Node node) {
+    public AbstractFailbackRegistry(Node node) {
         super(node);
 
         int retryPeriod = Configs.getInt(ConfigKey.REGISTRY_RETRY_PERIOD_KEY, Constants.DEFAULT_REGISTRY_RETRY_PERIOD);

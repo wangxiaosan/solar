@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <name>eureka.redis</name>
     <artifactId>wwy-eureka-redis</artifactId>
 
 
