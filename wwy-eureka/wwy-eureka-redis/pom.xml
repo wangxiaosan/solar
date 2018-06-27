@@ -10,6 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>eureka.redis</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.wwy.solar</groupId>
+            <artifactId>wwy-eureka-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
     <artifactId>wwy-eureka-redis</artifactId>
 
 
