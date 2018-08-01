@@ -37,6 +37,8 @@ public class Configs {
 
     public static Map<String, Object> configData = new LinkedHashMap<>();
 
+	final static Pattern PATTERN = Pattern.compile("\\$\\{(\\w+.?\\w+)+\\}");
+
     static {
         load();
     }
@@ -201,8 +203,7 @@ public class Configs {
      * @return
      */
     public static String parseEnvExpr(String str) {
-        Pattern pattern = Pattern.compile("\\$\\{(\\w+.?\\w+)+\\}");
-        Matcher matcher = pattern.matcher(str);
+        Matcher matcher = PATTERN.matcher(str);
         while (matcher.find()) {
             String group = matcher.group();
             String var = group.substring(2, group.length() - 1);

@@ -9,25 +9,31 @@ import com.wwy.common.lang.spi.SPI;
  * 事件中心接口
  */
 
-@SPI("inJvm")
+@SPI("injvm")
 public interface EventCenter {
-    /**
-     * 订阅主题
-     */
-    void subscribe(EventSubscriber subscriber, String... topics);
+	/**
+	 * 订阅主题
+	 * @param subscriber 订阅者
+	 * @param topics 订阅主题
+	 */
+	void subscribe(EventSubscriber subscriber, String... topics);
 
-    /**
-     * 取消订阅主题
-     */
-    void unSubscribe(String topic, EventSubscriber subscriber);
+	/**
+	 * 取消订阅主题
+	 * @param topic 主题
+	 * @param subscriber 订阅者
+	 */
+	void unSubscribe(String topic, EventSubscriber subscriber);
 
-    /**
-     * 同步发布主题消息
-     */
-    void publishSync(EventInfo eventInfo);
+	/**
+	 * 同步发布主题消息
+	 * @param eventInfo 事件消息
+	 */
+	void publishSync(EventInfo eventInfo);
 
-    /**
-     * 异步发送主题消息
-     */
-    void publishAsync(EventInfo eventInfo);
+	/**
+	 * 异步发送主题消息
+	 * @param eventInfo 事件消息
+	 */
+	void publishAsync(EventInfo eventInfo);
 }

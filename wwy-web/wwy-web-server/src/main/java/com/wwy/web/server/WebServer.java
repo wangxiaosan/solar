@@ -13,19 +13,57 @@ import java.util.Map;
  */
 public interface WebServer {
 
+	/**
+	 * web服务启动
+	 * @throws Exception
+	 */
     void start() throws Exception;
 
-    void stop() throws Exception;
+	/**
+	 * web服务停止
+	 * @throws Exception
+	 */
+	void stop() throws Exception;
 
+	/**
+	 * 增加Servlet Context 初始化key-value
+	 * @param name
+	 * @param value
+	 */
     void addContextInitParam(String name,String value);
 
-    void addServlet(Servlet servlet, String pathSpec, Map<String, String> initParams);
+	/**
+	 * 增加servlet
+	 * @param servlet
+	 * @param pathSpec
+	 * @param initParams
+	 */
+	void addServlet(Servlet servlet, String pathSpec, Map<String, String> initParams);
 
+	/**
+	 * 增加feilter
+	 * @param filter
+	 * @param pathSpec
+	 * @param initParams
+	 * @param dispatcherTypes
+	 */
     void addFilter(Filter filter, String pathSpec, Map<String, String> initParams, EnumSet<DispatcherType> dispatcherTypes);
 
-    void addEventListener(EventListener listener);
+	/**
+	 * 增加事件监听
+	 * @param listener
+	 */
+	void addEventListener(EventListener listener);
 
+	/**
+	 * 获取server host
+	 * @return
+	 */
     String getServerHost();
 
-    int getServerPort();
+	/**
+	 * 获取server port
+	 * @return
+	 */
+	int getServerPort();
 }

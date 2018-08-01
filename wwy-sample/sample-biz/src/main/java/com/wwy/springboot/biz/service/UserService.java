@@ -9,5 +9,9 @@ import java.util.List;
  * @date 2017/12/15
  */
 public interface UserService {
+	/**
+	 * 查找所有用户
+	 * @return
+	 */
     List<UserDto> findAllUser();
 }

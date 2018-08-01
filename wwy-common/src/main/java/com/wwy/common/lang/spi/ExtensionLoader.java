@@ -48,8 +48,9 @@ public class ExtensionLoader<T> {
     private Map<String, IllegalStateException> exceptions = new ConcurrentHashMap<>();
 
     public static <T> ExtensionLoader<T> getExtensionLoader(Class<T> type) {
-        if (type == null)
-            throw new IllegalArgumentException("Extension type == null");
+        if (type == null) {
+	        throw new IllegalArgumentException("Extension type == null");
+        }
         if (!type.isInterface()) {
             throw new IllegalArgumentException("Extension type(" + type + ") is not interface!");
         }
@@ -129,8 +130,9 @@ public class ExtensionLoader<T> {
      * @return
      */
     public boolean hasExtension(String name) {
-        if (name == null || name.length() == 0)
-            throw new IllegalArgumentException("Extension name == null");
+        if (name == null || name.length() == 0) {
+	        throw new IllegalArgumentException("Extension name == null");
+        }
         try {
             getExtensionClass(name);
             return true;
@@ -140,13 +142,16 @@ public class ExtensionLoader<T> {
     }
 
     private Class<?> getExtensionClass(String name) {
-        if (type == null)
-            throw new IllegalArgumentException("Extension type == null");
-        if (name == null)
-            throw new IllegalArgumentException("Extension name == null");
+        if (type == null) {
+	        throw new IllegalArgumentException("Extension type == null");
+        }
+        if (name == null) {
+	        throw new IllegalArgumentException("Extension name == null");
+        }
         Class<?> clazz = getExtensionClasses().get(name);
-        if (clazz == null)
-            throw new IllegalStateException("No such extension \"" + name + "\" for " + type.getName() + "!");
+        if (clazz == null) {
+	        throw new IllegalStateException("No such extension \"" + name + "\" for " + type.getName() + "!");
+        }
         return clazz;
     }
 
@@ -164,8 +169,11 @@ public class ExtensionLoader<T> {
         return classes;
     }
 
-    // 此方法已经getExtensionClasses方法同步过。
-    private Map<String, Class<?>> loadExtensionClasses() {
+	/**
+	 *  此方法已经getExtensionClasses方法同步过。
+	 * @return
+	 */
+	private Map<String, Class<?>> loadExtensionClasses() {
         final SPI defaultAnnotation = type.getAnnotation(SPI.class);
         if (defaultAnnotation != null) {
             String value = defaultAnnotation.value();
@@ -175,7 +183,9 @@ public class ExtensionLoader<T> {
                     throw new IllegalStateException("more than 1 default extension name on extension " + type.getName()
                             + ": " + Arrays.toString(names));
                 }
-                if (names.length == 1) cachedDefaultName = names[0];
+                if (names.length == 1) {
+                	cachedDefaultName = names[0];
+                }
             }
         }
 
@@ -203,7 +213,9 @@ public class ExtensionLoader<T> {
                             String line;
                             while ((line = reader.readLine()) != null) {
                                 final int ci = line.indexOf('#');
-                                if (ci >= 0) line = line.substring(0, ci);
+                                if (ci >= 0) {
+                                	line = line.substring(0, ci);
+                                }
                                 line = line.trim();
                                 if (line.length() > 0) {
                                     try {

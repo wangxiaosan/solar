@@ -20,9 +20,9 @@ import redis.clients.jedis.JedisPoolConfig;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import static com.wwy.common.lang.utils.CollectionUtils.isNotEmpty;
@@ -35,8 +35,7 @@ public class RedisRegistry extends AbstractFailbackRegistry {
 
 	private final Map<String, JedisPool> jedisPoolMap = new ConcurrentHashMap<>();
 	private String nodeGroup;
-	private final ScheduledExecutorService expireExecutor = Executors.newScheduledThreadPool(1,
-			new NamedThreadFactory("JPTRedisRegistryExpireTimer", true));
+	private final ScheduledExecutorService expireExecutor = new ScheduledThreadPoolExecutor(1,  new NamedThreadFactory("JPTRedisRegistryExpireTimer"));
 	private final ScheduledFuture<?> expireFuture;
 	private final int expirePeriod;
 	private boolean replicate;

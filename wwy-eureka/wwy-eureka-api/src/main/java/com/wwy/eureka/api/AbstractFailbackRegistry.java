@@ -17,18 +17,24 @@ import java.util.concurrent.*;
  * @date 2018/03/07
  */
 public abstract class AbstractFailbackRegistry extends AbstractRegistry {
-    // 定时任务执行器
+	/**
+	 * 定时任务执行器
+	 */
     private final ScheduledExecutorService retryExecutor = Executors.newScheduledThreadPool(1,
             new NamedThreadFactory("LTSRegistryFailedRetryTimer", true));
 
-    // 失败重试定时器，定时检查是否有请求失败，如有，无限次重试
-    private ScheduledFuture<?> retryFuture;
+	/**
+	 * 失败重试定时器，定时检查是否有请求失败，如有，无限次重试
+	 */
+	private ScheduledFuture<?> retryFuture;
 
-    // 注册失败的定时重试
-    private final Set<Node> failedRegistered = new ConcurrentHashSet<>();
+	/**
+	 * 注册失败的定时重试
+	 */
+	private final Set<Node> failedRegistered = new ConcurrentHashSet<>();
     private final Set<Node> failedUnRegistered = new ConcurrentHashSet<>();
     private final ConcurrentMap<Node, Set<NotifyListener>> failedSubscribed = new ConcurrentHashMap<>();
-    private final ConcurrentMap<Node, Set<NotifyListener>> failedUnsubscribed = new ConcurrentHashMap<>();
+    private final ConcurrentMap<Node, Set<NotifyListener>> failedUnSubscribed = new ConcurrentHashMap<>();
     private final ConcurrentMap<Node, Map<NotifyListener, NotifyPair<NotifyEvent, List<Node>>>> failedNotified = new ConcurrentHashMap<>();
 
     public AbstractFailbackRegistry(Node node) {
@@ -36,15 +42,13 @@ public abstract class AbstractFailbackRegistry extends AbstractRegistry {
 
         int retryPeriod = Configs.getInt(ConfigKey.REGISTRY_RETRY_PERIOD_KEY, Constants.DEFAULT_REGISTRY_RETRY_PERIOD);
 
-        this.retryFuture = retryExecutor.scheduleWithFixedDelay(new Runnable() {
-            public void run() {
+        this.retryFuture = retryExecutor.scheduleWithFixedDelay(()-> {
                 // 检测并连接注册中心
                 try {
                     retry();
                 } catch (Throwable t) { // 防御性容错
                     LOGGER.error(MarkerFactory.getMarker(LogMarker.PLATFORM), "Unexpected error occur at failed retry, cause: " + t.getMessage(), t);
                 }
-            }
         }, retryPeriod, retryPeriod, TimeUnit.MILLISECONDS);
 
         NodeShutdownHook.registerHook(node, this.getClass().getName(), new Callable() {
@@ -112,10 +116,10 @@ public abstract class AbstractFailbackRegistry extends AbstractRegistry {
 
     protected void addFailedUnsubscribed(Node node, NotifyListener listener) {
         // 将失败的取消订阅请求记录到失败列表，定时重试
-        Set<NotifyListener> listeners = failedUnsubscribed.get(node);
+        Set<NotifyListener> listeners = failedUnSubscribed.get(node);
         if (listeners == null) {
-            failedUnsubscribed.putIfAbsent(node, new ConcurrentHashSet<>());
-            listeners = failedUnsubscribed.get(node);
+            failedUnSubscribed.putIfAbsent(node, new ConcurrentHashSet<>());
+            listeners = failedUnSubscribed.get(node);
         }
         listeners.add(listener);
     }
@@ -179,7 +183,7 @@ public abstract class AbstractFailbackRegistry extends AbstractRegistry {
         if (listeners != null) {
             listeners.remove(listener);
         }
-        listeners = failedUnsubscribed.get(node);
+        listeners = failedUnSubscribed.get(node);
         if (listeners != null) {
             listeners.remove(listener);
         }
@@ -261,8 +265,8 @@ public abstract class AbstractFailbackRegistry extends AbstractRegistry {
                 }
             }
         }
-        if (!failedUnsubscribed.isEmpty()) {
-            Map<Node, Set<NotifyListener>> failed = new HashMap<>(failedUnsubscribed);
+        if (!failedUnSubscribed.isEmpty()) {
+            Map<Node, Set<NotifyListener>> failed = new HashMap<>(failedUnSubscribed);
             for (Map.Entry<Node, Set<NotifyListener>> entry : new HashMap<>(failed).entrySet()) {
                 if (entry.getValue() == null || entry.getValue().size() == 0) {
                     failed.remove(entry.getKey());
@@ -331,11 +335,29 @@ public abstract class AbstractFailbackRegistry extends AbstractRegistry {
         }
     }
 
-    protected abstract void doRegister(Node node);
+	/**
+	 * 服务节点注册
+	 * @param node 服务节点
+	 */
+	protected abstract void doRegister(Node node);
 
+	/**
+	 * 移除服务节点注册
+	 * @param node 服务节点
+	 */
     protected abstract void doUnRegister(Node node);
 
-    protected abstract void doSubscribe(Node node, NotifyListener listener);
+	/**
+	 * 服务节点订阅
+	 * @param node 服务节点
+	 * @param listener 监听器
+	 */
+	protected abstract void doSubscribe(Node node, NotifyListener listener);
 
+	/**
+	 * 取消服务节点订阅
+	 * @param node 服务节点
+	 * @param listener 监听器
+	 */
     protected abstract void doUnsubscribe(Node node, NotifyListener listener);
 }

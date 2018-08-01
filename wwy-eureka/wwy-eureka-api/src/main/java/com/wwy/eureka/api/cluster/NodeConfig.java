@@ -12,31 +12,51 @@ import com.alibaba.fastjson.JSON;
 public class NodeConfig {
     private String name;
 
-    // 节点是否可用
-    private boolean available = true;
+	/**
+	 * 节点是否可用
+	 */
+	private boolean available = true;
 
-    // 应用节点组
-    private String nodeGroup;
-    // 唯一标识
-    private String identity;
-    // 工作线程, 目前只对 TaskTracker 有效
-    private int workThreads;
-    // 节点类型
-    private NodeType nodeType;
-    // 注册中心 地址
-    private String registryAddress;
-    // 远程连接超时时间
-    private int invokeTimeoutMillis;
-    // 监听端口
-    private int listenPort;
+	/**
+	 * 应用节点组
+	 */
+	private String nodeGroup;
+	/**
+	 * 唯一标识
+	 */
+	private String identity;
+	/**
+	 * 工作线程, 目前只对 TaskTracker 有效
+	 */
+	private int workThreads;
+	/**
+	 * 节点类型
+	 */
+	private NodeType nodeType;
+	/**
+	 * 注册中心 地址
+	 */
+	private String registryAddress;
+	/**
+	 * 远程连接超时时间
+	 */
+	private int invokeTimeoutMillis;
+	/**
+	 * 监听端口
+	 */
+	private int listenPort;
 
     private int serverPort;
 
     private String ip;
-    // 任务信息存储路径(譬如TaskTracker反馈任务信息给JobTracker, JobTracker down掉了, 那么存储下来等待JobTracker可用时再发送)
-    private String dataPath;
-    // 集群名字
-    private String clusterName;
+	/**
+	 *  任务信息存储路径(譬如TaskTracker反馈任务信息给JobTracker, JobTracker down掉了, 那么存储下来等待JobTracker可用时再发送)
+	 */
+	private String dataPath;
+	/**
+	 *  集群名字
+	 */
+	private String clusterName;
 
     public String getName() {
         return name;

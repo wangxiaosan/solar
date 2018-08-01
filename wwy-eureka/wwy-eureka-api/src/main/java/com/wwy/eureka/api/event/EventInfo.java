@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 事件信息
  * @author wangxiaosan
  * @date 2017/10/20
  */

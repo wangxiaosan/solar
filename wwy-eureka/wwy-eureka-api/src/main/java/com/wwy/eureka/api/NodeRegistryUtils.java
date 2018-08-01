@@ -15,6 +15,8 @@ public class NodeRegistryUtils {
         return "/JPT/" + clusterName + "/NODES";
     }
 
+    private static final String COLON = ":";
+
     public static String getNodeTypePath(String clusterName, NodeType nodeType) {
         return NodeRegistryUtils.getRootPath(clusterName) + "/" + nodeType;
     }
@@ -30,11 +32,11 @@ public class NodeRegistryUtils {
 
         url = url.substring(nodeType.name().length() + 3);
         String address = url.split("\\?")[0];
-        String ip = address.split(":")[0];
+        String ip = address.split(COLON)[0];
 
         config.setIp(ip);
-        if (address.contains(":")) {
-            String port = address.split(":")[1];
+        if (address.contains(COLON)) {
+            String port = address.split(COLON)[1];
             if (port != null && !"".equals(port.trim())) {
                 config.setListenPort(Integer.valueOf(port));
             }

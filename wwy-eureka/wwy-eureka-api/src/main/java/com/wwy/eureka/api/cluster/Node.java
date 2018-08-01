@@ -19,18 +19,29 @@ public class Node {
 
     private String hostName;
 
-    // 自己关注的节点类型
-    private List<NodeType> listenNodeTypes;
+	/**
+	 * 自己关注的节点类型
+	 */
+	private List<NodeType> listenNodeTypes;
 
     private String fullString;
 
-    // 节点管理
-    private SubscribedNodeManager subscribedNodeManager;
-    // master节点选举者
-    private MasterElector masterElector;
-    // 事件中心
-    private EventCenter eventCenter;
-    // 注册中心状态监控
+	/**
+	 * 节点管理
+	 */
+	private SubscribedNodeManager subscribedNodeManager;
+	/**
+	 * master节点选举者
+	 */
+	private MasterElector masterElector;
+	/**
+	 *  事件中心
+	 */
+	private EventCenter eventCenter;
+
+	/**
+	 * 注册中心状态监控
+	 */
 //    private RegistryStatMonitor registryStatMonitor;
 
     public EventCenter getEventCenter() {

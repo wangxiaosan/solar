@@ -11,6 +11,7 @@ import com.wwy.eureka.api.cluster.Node;
 public interface MasterChangeListener {
 
     /**
+     * 节点变化
      * @param master master 节点
      * @param isMaster 当前节点是不是master节点
      */
