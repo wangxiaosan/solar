@@ -10,25 +10,25 @@ public interface LogMarker {
     /**
      * 平台日志
      */
-    public static final String PLATFORM = "platform";
+    String PLATFORM = "platform";
     /**
      * 容器
      */
-    public static final String CONTAINER = "container";
+    String CONTAINER = "container";
     /**
      * 业务
      */
-    public static final String BUSINESS = "business";
+    String BUSINESS = "business";
     /**
      * 安全
      */
-    public static final String SECURITY = "security";
+    String SECURITY = "security";
     /**
      * 数据库
      */
-    public static final String DATABASE = "database";
+    String DATABASE = "database";
     /**
      * 操作
      */
-    public static final String OPERATION = "operation";
+    String OPERATION = "operation";
 }

@@ -6,18 +6,24 @@ import com.wwy.common.lang.NodeRegistryException;
 import com.wwy.common.lang.constants.ConfigKey;
 import com.wwy.common.lang.constants.Constants;
 import com.wwy.common.lang.constants.LogMarker;
+import com.wwy.common.lang.utils.CollectionUtils;
+import com.wwy.common.lang.utils.StringHelper;
 import com.wwy.eureka.api.AbstractFailbackRegistry;
 import com.wwy.eureka.api.NodeRegistryUtils;
 import com.wwy.eureka.api.NotifyListener;
 import com.wwy.eureka.api.cluster.Node;
 import com.wwy.eureka.api.cluster.NodeConfig;
+import com.wwy.eureka.api.cluster.NodeType;
 import org.joda.time.DateTime;
 import org.slf4j.MarkerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisPubSub;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
@@ -174,11 +180,46 @@ public class RedisRegistry extends AbstractFailbackRegistry {
 
 	@Override
 	protected void doUnRegister(Node node) {
+		String key = NodeRegistryUtils.getNodeTypePath(nodeGroup, node.getConfig().getNodeType());
+		boolean success = false;
+		NodeRegistryException exception = null;
+		for (Map.Entry<String, JedisPool> entry : jedisPoolMap.entrySet()) {
+			JedisPool jedisPool = entry.getValue();
+			try (Jedis jedis = jedisPool.getResource()) {
+				jedis.hdel(key, node.toFullString());
+				jedis.publish(key, Constants.UNREGISTER);
+				success = true;
+				if (!replicate) {
+					// 如果服务器端已同步数据，只需写入单台机器
+					break;
+				}
+			} catch (Throwable t) {
+				exception = new NodeRegistryException("Failed to unregister node to redis registry. registry: " + entry.getKey() + ", node: " + node + ", cause: " + t.getMessage(), t);
+			}
+		}
+		if (exception != null) {
+			if(success) {
+				LOGGER.warn(MarkerFactory.getMarker(LogMarker.PLATFORM), exception.getMessage(), exception);
+			} else {
+				throw exception;
+			}
+		}
 
 	}
 
 	@Override
 	protected void doSubscribe(Node node, NotifyListener listener) {
+		List<NodeType> listenNodeTypes = node.getListenNodeTypes();
+		if(CollectionUtils.isEmpty(listenNodeTypes)) {
+			return;
+		}
+		for (NodeType listenNodeType : listenNodeTypes) {
+			String listenNodePath = NodeRegistryUtils.getNodeTypePath(nodeGroup, listenNodeType);
+			Notifier notifier = notifiers.get(listenNodePath);
+			if (Objects.isNull(notifier)) {
+				notifier = new Notifier(listenNodePath);
+			}
+		}
 
 	}
 
@@ -187,8 +228,80 @@ public class RedisRegistry extends AbstractFailbackRegistry {
 
 	}
 
+	/**
+	 *  用这个线程来监控redis是否可用
+	 */
+	private volatile String monitorId;
+	private volatile boolean redisAvailable = false;
+
 	private class Notifier extends Thread {
 
+		private final String listenNodePath;
 
+		private volatile Jedis jedis;
+
+		private volatile boolean running = true;
+
+		public Notifier(String listenNodePath) {
+			super.setDaemon(true);
+			super.setName("JPTRedisSubscribe");
+			this.listenNodePath = listenNodePath;
+			if (StringHelper.isBlank(monitorId)) {
+				monitorId = listenNodePath;
+			}
+		}
+
+		@Override
+		public void run(){
+			try {
+				while (running) {
+					int retryTime = 0;
+					for (Map.Entry<String, JedisPool> entry : jedisPoolMap.entrySet()) {
+						try {
+							JedisPool jedisPool = entry.getValue();
+							jedis = jedisPool.getResource();
+							if (listenNodePath.equals(monitorId) && !redisAvailable) {
+								redisAvailable = true;
+								// 阻塞
+								jedis.subscribe(new NotifySub(jedisPool), listenNodePath);
+							}
+						} finally {
+							jedis.close();
+						}
+					}
+				}
+			} catch (Throwable t) {
+				LOGGER.error(MarkerFactory.getMarker(LogMarker.PLATFORM), t.getMessage(), t);
+			}
+		}
+
+	}
+
+	class NotifySub extends JedisPubSub {
+		private final JedisPool jedisPool;
+
+		public NotifySub(JedisPool jedisPool) {
+			this.jedisPool = jedisPool;
+		}
+
+		@Override
+		public void onMessage(String key, String msg) {
+			if (LOGGER.isInfoEnabled()) {
+				LOGGER.info(MarkerFactory.getMarker(LogMarker.PLATFORM), "redis event: " + key + " = " + msg);
+			}
+			if (msg.equals(Constants.REGISTER)
+					|| msg.equals(Constants.UNREGISTER)) {
+				try {
+					Jedis jedis = jedisPool.getResource();
+					try {
+						doNotify(jedis, key);
+					} finally {
+						jedis.close();
+					}
+				} catch (Throwable t) {
+					LOGGER.error(MarkerFactory.getMarker(LogMarker.PLATFORM), t.getMessage(), t);
+				}
+			}
+		}
 	}
 }
